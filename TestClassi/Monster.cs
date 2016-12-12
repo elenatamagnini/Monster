@@ -18,6 +18,7 @@ namespace TestClassi
             }
         }
 
+        public bool alive { get { return curHp > 0; } }
 
         private int _curHp;
         public int curHp
@@ -36,9 +37,23 @@ namespace TestClassi
         }
 
 
-        public int damage;
-        public int healFactor;
-        
+        public int _damage;
+        public int damage { get { return _damage; } }
+
+
+        private int _healFactor;
+        public int healFactor
+        {
+            get
+            {
+                return _healFactor;
+            }
+            set
+            {
+                _healFactor = value;
+            }
+        }
+
         public Monster(string name, int maxHp, int damage, int healFactor = 0)
         {
             _name = name;
@@ -48,16 +63,19 @@ namespace TestClassi
 
             curHp = maxHp;
 
-            this.damage = damage;
+            if (damage < 0) damage = 0;
+            _damage = damage;
+
             this.healFactor = healFactor;
+            Console.WriteLine("test " + _healFactor);
             describe();
         }
 
 
         public string describe()
         {
-            string output = "Questo è " + _name + "\r\n";
-            output += "HP: " + _curHp + "\r\n";
+            string output = "Questo è " + name + "\r\n";
+            output += "HP: " + curHp + "\r\n";
             output += "DAMAGE: " + damage + "\r\n";
 
             return output;
@@ -76,27 +94,27 @@ namespace TestClassi
                 return;
             }
 
-            if (_curHp <= 0)
+            if (curHp <= 0)
             {
                 Console.WriteLine("Non puoi curare nessuno da morto");
                 return;
             }
 
-            if (target._curHp <= 0)
+            if (target.curHp <= 0)
             {
                 Console.WriteLine(target._name + " è esausto e non puoi resuscitarlo con la cura.");
                 return;
             }
 
-            target._curHp += healFactor;
+            target.curHp += healFactor;
 
-            if (target._curHp > target._maxHp)
+            if (target.curHp > target.maxHp)
             {
-                target._curHp = target._maxHp;
+                target.curHp = target.maxHp;
             }
 
-            Console.WriteLine(_name + " usa cura su " + target._name);
-            Console.WriteLine(target._name + " è stato curato e ora ha " + target._curHp + "/" + target._maxHp + " HP");
+            Console.WriteLine(name + " usa cura su " + target.name);
+            Console.WriteLine(target.name + " è stato curato e ora ha " + target.curHp + "/" + target.maxHp + " HP");
         }
 
         public void heal()
@@ -106,29 +124,29 @@ namespace TestClassi
 
         public void attack(Monster target)
         {
-            if (_curHp <= 0)
+            if (!alive)
             {
                 Console.WriteLine("Non puoi attaccare nessuno da morto");
                 return;
             }
 
-            if (target._curHp <= 0)
+            if (!target.alive)
             {
-                Console.WriteLine(target._name + " è già esausto, non infierire.");
+                Console.WriteLine(target.name + " è già esausto, non infierire.");
                 return;
             }
 
-            Console.WriteLine(_name + " attacca " + target._name);
-            Console.WriteLine(_name + " fa " + damage + " danni a " + target._name);
-            target._curHp -= damage;
-            
-            if (target._curHp <= 0 )
+            Console.WriteLine(name + " attacca " + target.name);
+            Console.WriteLine(name + " fa " + damage + " danni a " + target.name);
+            target.curHp -= damage;
+
+            if (!target.alive) 
             {
-                target._curHp = 0;
-                Console.WriteLine(target._name + " è esausto.");
+                target.curHp = 0;
+                Console.WriteLine(target.name + " è esausto.");
             } else
             {
-                Console.WriteLine("a " + target._name + " rimangono " + target._curHp + " hp");
+                Console.WriteLine("a " + target.name + " rimangono " + target.curHp + " hp");
             }
         }
     }
