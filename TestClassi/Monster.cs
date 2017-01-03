@@ -11,12 +11,8 @@ namespace TestClassi
 
         private int _maxHp;
         public int maxHp
-        {
-            get
-            {
-                return _maxHp;
-            }
-        }
+        { get { return _maxHp; } }
+
 
         public bool alive { get { return curHp > 0; } }
 
@@ -53,6 +49,15 @@ namespace TestClassi
                 _healFactor = value;
             }
         }
+
+        public string status
+        {
+            get
+            {
+                return curHp + "/" + maxHp + " HP";
+            }
+        }
+
 
         public Monster(string name, int maxHp, int damage, int healFactor = 0)
         {
@@ -114,7 +119,7 @@ namespace TestClassi
             }
 
             Console.WriteLine(name + " usa cura su " + target.name);
-            Console.WriteLine(target.name + " è stato curato e ora ha " + target.curHp + "/" + target.maxHp + " HP");
+            Console.WriteLine(target.name + " è stato curato e ora ha " + target.status);
         }
 
         public void heal()
@@ -122,7 +127,7 @@ namespace TestClassi
             heal(this);
         }
 
-        public void attack(Monster target)
+        public virtual void attack(Monster target)
         {
             if (!alive)
             {
