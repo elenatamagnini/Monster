@@ -12,17 +12,28 @@ namespace TestClassi
 {
     public partial class Form1 : Form
     {
-        private List<Monster> monsters = new List<Monster>();
+        private List<Monster> monsters;
 
         public Form1()
         {
             InitializeComponent();
+            monsters = Deserializer.deserializeMonsters();
+
+            foreach (Monster m in monsters)
+            {
+                Console.WriteLine(m.GetType());
+                if (m.GetType() == typeof(Fire_Monster))
+                {
+                    Fire_Monster f = m as Fire_Monster;
+                    Console.WriteLine(f.fireDamage);
+                }
+                //Console.WriteLine(m.fire);
+            }
         }
-           
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            addMonster(new Monster("tizio", 200, 100));
-            Console.WriteLine(monsters[0].describe());
+            //Console.WriteLine(monsters[0].describe());
         }
 
         private Monster addMonster(Monster m)
@@ -30,6 +41,5 @@ namespace TestClassi
             monsters.Add(m);
             return m;
         }
-
     }
 }
