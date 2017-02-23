@@ -9,17 +9,13 @@ namespace TestClassi
 {
     static class Deserializer
     {
-#if DEBUG
-        private static string path = @"..\..\monsters.csv";
-#else
-            private static string path = @".\monsters.csv";
-#endif
+
 
         public static List<Monster> deserializeMonsters()
         {
             List<Monster> monsters = new List<Monster>();
 
-            string[] data = File.ReadAllLines(path);
+            string[] data = File.ReadAllLines(Assets.assetsPath + "monsters.csv");
             int l = data.Length;
             for (int i = 1; i < l; i++)
             {

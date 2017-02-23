@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets.cs" />
     <Compile Include="Deserializer.cs" />
     <Compile Include="Fire_Monster.cs" />
     <Compile Include="Form1.cs">

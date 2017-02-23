@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace TestClassi
 {
@@ -19,7 +20,7 @@ namespace TestClassi
             InitializeComponent();
             monsters = Deserializer.deserializeMonsters();
 
-            foreach (Monster m in monsters)
+            /*foreach (Monster m in monsters)
             {
                 Console.WriteLine(m.GetType());
                 if (m.GetType() == typeof(Fire_Monster))
@@ -28,12 +29,23 @@ namespace TestClassi
                     Console.WriteLine(f.fireDamage);
                 }
                 //Console.WriteLine(m.fire);
-            }
+            }*/
         }
+
+        public string[] fileEntries; 
+        public int indice;
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Console.WriteLine(monsters[0].describe());
+             fileEntries = Directory.GetFiles(@"..\..\assets\images\");
+
+         
+            if (fileEntries.Count() > 0)
+            {
+                pictureBox1.Load(fileEntries[0]);
+               
+                indice = 0; 
+            }
         }
 
         private Monster addMonster(Monster m)
@@ -41,5 +53,11 @@ namespace TestClassi
             monsters.Add(m);
             return m;
         }
+
+       
+
+
+        }
     }
-}
+
+
